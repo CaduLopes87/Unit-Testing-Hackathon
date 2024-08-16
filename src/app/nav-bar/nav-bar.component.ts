@@ -6,6 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav-bar.component.scss'],
 })
 export class NavBarComponent implements OnInit {
+
+  /**
+   * Create a list with the menu options 
+   */
   menuItems = [{
       name: 'Home'
     }, {
@@ -15,6 +19,7 @@ export class NavBarComponent implements OnInit {
     }, {
       name: 'Contact Us'
     }];
+    
   constructor() { }
 
   ngOnInit(): void { }

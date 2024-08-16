@@ -19,16 +19,27 @@ export class AddProductComponent implements OnInit {
     private snackbar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) private _data: Product,
     private dialogRef: MatDialogRef<AddProductComponent>
-  ) { }
+  ) {}
 
+  /**
+   * returns the data of the private variable
+   */
   public get data(): Product {
     return this._data;
   }
 
+  /**
+   * set the data of the private variable
+   */
   public set data(d: Product) {
     this._data = d;
   }
-
+  /**
+   * On initialization
+   * Identify if it has data to edit or is a new addition
+   * If has data to edit, add products data to the produc form
+   * If has no data, set empty value to the product form 
+   */
   ngOnInit(): void {
     const hasData = this.data && Object.keys(this.data).length;
     this.productForm = new FormGroup({
@@ -39,6 +50,11 @@ export class AddProductComponent implements OnInit {
     });
   }
 
+  /**
+   * Verify if has an existing data
+   * On true case, it gets the previous id and tries to update the product
+   * On false case, it tries to create a new product
+   */
   saveProduct() {
     const product = this.productForm.value as Product;
     if (Object.keys(this.data).length) {
@@ -46,29 +62,29 @@ export class AddProductComponent implements OnInit {
       this.productService.updateProduct(product).subscribe({
         next: (res) => {
           this.snackbar.open('Updated Successfully!...', '', {
-            duration: 3000
+            duration: 3000,
           });
           this.dialogRef.close();
         },
         error: (error) => {
           this.snackbar.open('Something went wrong!...', '', {
-            duration: 3000
+            duration: 3000,
           });
-        }
+        },
       });
     } else {
       this.productService.saveProduct(product).subscribe({
         next: (res) => {
           this.snackbar.open('Added Successfully!...', '', {
-            duration: 3000
+            duration: 3000,
           });
           this.dialogRef.close();
         },
         error: (error) => {
           this.snackbar.open('Something went wrong!...', '', {
-            duration: 3000
+            duration: 3000,
           });
-        }
+        },
       });
     }
   }

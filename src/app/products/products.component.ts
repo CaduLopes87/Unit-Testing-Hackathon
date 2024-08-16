@@ -21,10 +21,19 @@ export class ProductsComponent implements OnInit {
     private snackbar: MatSnackBar
   ) {}
 
+  /**
+   * List all the products at site initialization
+   */
   ngOnInit(): void {
     this.getProducts();
   }
 
+  /**
+   * Active the spinner in beggin
+   * Call a method in productService to list all the products
+   * On successful case, the products will be listed and the spinner will be hidded
+   * On unsuccessful case, the spinner will be hidded and an error message will be presented for 3 seconds
+   */
   getProducts() {
     this.showSpinner = true;
     this.productService.getProducts().subscribe({
@@ -41,12 +50,19 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+  /**
+   * An dialog box will be presented to add a new product
+   */
   openDialog() {
     this.dialog.open(AddProductComponent, {
       width: '40%',
     });
   }
 
+  /**
+   * @param product receive the selected product data 
+   * An dialog box will be presented to edit the selected product data
+   */
   editProduct(product: Product) {
     this.dialog.open(AddProductComponent, {
       data: product,
@@ -54,6 +70,12 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+  /**
+   * @param product receive the selected product data
+   * Call a method in productService to delete the selected product
+   * On successful case, a success message will be presented for 3 seconds
+   * On unsuccessful case, an error message will be presented for 3 seconds
+   */
   deleteProduct(product: any) {
     this.productService.deleteProduct(product.id).subscribe({
       next: (res) => {
